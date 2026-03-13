@@ -157,6 +157,30 @@
     input[readonly].filled {
       color: #00FF41;
       cursor: default;
+      border-color: #00FF41;
+      animation: glow 0.6s ease-out;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px #00FF41, 0 0 15px #00FF41;
+        border-color: #00FF41;
+      }
+      100% {
+        box-shadow: none;
+        border-color: #00FF41;
+      }
+    }
+
+    input.loading {
+      background-image: linear-gradient(90deg, #1A1A1A 0%, #2A2A2A 50%, #1A1A1A 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
 
     .error-msg {
@@ -320,10 +344,12 @@ bairro.value = data.district</code></pre>
       }
 
       clearFields();
+      autoFields.forEach(f => f.classList.add('loading'));
 
       try {
         const res = await fetch(`https://cep.awesomeapi.com.br/json/${rawCep}`);
         if (!res.ok) {
+          autoFields.forEach(f => f.classList.remove('loading'));
           if (res.status === 404 || res.status === 400) {
             cepError.textContent = 'CEP não encontrado. Confere aí.';
           } else {
@@ -332,6 +358,7 @@ bairro.value = data.district</code></pre>
           return;
         }
         const data = await res.json();
+        autoFields.forEach(f => f.classList.remove('loading'));
         logradouro.value = data.address || '';
         bairro.value = data.district || '';
         cidade.value = data.city || '';
@@ -341,6 +368,7 @@ bairro.value = data.district</code></pre>
         });
         demoResult.style.display = 'block';
       } catch {
+        autoFields.forEach(f => f.classList.remove('loading'));
         cepError.textContent = 'Deu ruim na API. Tenta de novo.';
       }
     }
