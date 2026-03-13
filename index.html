@@ -327,9 +327,22 @@ bairro.value = data.district</code></pre>
     </section>
 
     <section id="dicas">
+      <h2>Outras coisas que você deveria fazer.</h2>
+      <p>Já que a gente tá aqui:</p>
+
+      <p><strong>Usa o teclado certo.</strong> Se você tá pedindo um CEP, usa <code>inputmode="numeric"</code>. É um atributo HTML. No celular, o usuário vê um teclado numérico, não um QWERTY completo. Serve pra CEP, telefone, cartão de crédito. Qualquer coisa que é obviamente só dígito. Você já sabe o tipo do input. Avisa o celular.</p>
+
+      <p><strong>Trabalha com o autofill, não contra ele.</strong> Navegadores têm autofill há mais de uma década. Usa os atributos certos — <code>autocomplete="postal-code"</code>, <code>address-line1</code>, <code>country</code>. Se o seu formulário briga com o autofill do browser, o seu formulário tá errado. O browser tá tentando economizar 45 segundos do seu usuário. Deixa ele.</p>
+
+      <p><strong>Escopo o autocomplete.</strong> Quando você já sabe o CEP, o autocomplete de endereço busca em alguns milhares de endereços. Sem o CEP, busca em 20 milhões. É mais rápido. Mais preciso. O usuário digita menos. Você recebe dados mais limpos. Todo mundo ganha.</p>
     </section>
 
     <section id="fechamento">
+      <h2>Conserta seus formulários.</h2>
+      <p>Coloca o CEP primeiro. Autopreenche a cidade. O estado. O bairro. O logradouro. Deixa o usuário digitar só o que você não consegue adivinhar: o número e o complemento.</p>
+      <p>É um problema resolvido. A API é gratuita. O código são 4 linhas. Não existe literalmente nenhum motivo pra não fazer isso além da inércia coletiva de um milhão de product managers copiando e colando o mesmo template de formulário de endereço de 2009 e nunca perguntando "espera, por que o CEP tá por último?"</p>
+      <p>Por que o CEP tá por último?</p>
+      <p class="highlight" style="font-size: 1.4em; margin-top: 2rem;"><strong>Coloca primeiro, seus animais.</strong></p>
     </section>
   </main>
 
