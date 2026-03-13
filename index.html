@@ -101,6 +101,80 @@
       color: #C0392B;
     }
 
+    form {
+      margin: 2rem 0;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group-wide {
+      flex: 2;
+    }
+
+    .form-group-narrow {
+      flex: 1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      color: #E0E0E0;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #00FF41;
+    }
+
+    input[readonly] {
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    input[readonly].filled {
+      color: #00FF41;
+      cursor: default;
+    }
+
+    .error-msg {
+      display: block;
+      color: #C0392B;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      min-height: 1.2em;
+    }
+
+    #demo-result {
+      display: none;
+    }
+
+    #mapa-container {
+      margin: 1.5rem 0;
+    }
+
     footer {
       max-width: 720px;
       margin: 0 auto;
@@ -155,6 +229,44 @@ bairro.value = data.district</code></pre>
     </section>
 
     <section id="demo">
+      <h2>Não acredita? Testa.</h2>
+      <form id="cep-form" autocomplete="off">
+        <div class="form-group">
+          <label for="cep">CEP</label>
+          <input type="text" id="cep" name="cep" placeholder="00000-000" inputmode="numeric" autocomplete="postal-code" maxlength="9">
+          <span id="cep-error" class="error-msg"></span>
+        </div>
+        <div class="form-group">
+          <label for="logradouro">Logradouro</label>
+          <input type="text" id="logradouro" name="logradouro" readonly autocomplete="address-line1">
+        </div>
+        <div class="form-group">
+          <label for="bairro">Bairro</label>
+          <input type="text" id="bairro" name="bairro" readonly>
+        </div>
+        <div class="form-row">
+          <div class="form-group form-group-wide">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" readonly>
+          </div>
+          <div class="form-group form-group-narrow">
+            <label for="estado">Estado</label>
+            <input type="text" id="estado" name="estado" readonly>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group form-group-narrow">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero" inputmode="numeric">
+          </div>
+          <div class="form-group form-group-wide">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" name="complemento" placeholder="Apto, bloco, etc.">
+          </div>
+        </div>
+      </form>
+      <div id="mapa-container"></div>
+      <p id="demo-result">Viu como funciona? Você digitou 8 números e 4 campos se preencheram sozinhos. Agora você só precisa digitar o número da casa e o complemento. Não é mágica. É uma tabela de lookup. A gente tem isso desde os anos 70.</p>
     </section>
 
     <section id="muro-da-vergonha">
