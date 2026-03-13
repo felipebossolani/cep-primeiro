@@ -37,6 +37,14 @@
 
     section {
       margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     h1 {
@@ -252,6 +260,24 @@
       main {
         padding: 2rem 1rem;
       }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      pre {
+        padding: 1rem;
+        font-size: 0.8em;
+      }
+
+      .shame-tier {
+        padding-left: 1rem;
+      }
+
+      #mapa-container iframe {
+        height: 220px;
+      }
     }
   </style>
 </head>
@@ -459,6 +485,16 @@ bairro.value = data.district</code></pre>
         debounceTimer = setTimeout(() => fetchCep(raw), 300);
       }
     });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('section').forEach(s => observer.observe(s));
 
     document.getElementById('copy-link').addEventListener('click', (e) => {
       e.preventDefault();
