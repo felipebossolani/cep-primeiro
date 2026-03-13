@@ -293,6 +293,16 @@ bairro.value = data.district</code></pre>
     const mapaContainer = document.getElementById('mapa-container');
     const autoFields = [logradouro, bairro, cidade, estado];
 
+    let debounceTimer = null;
+
+    function maskCep(value) {
+      const digits = value.replace(/\D/g, '').slice(0, 8);
+      if (digits.length > 5) {
+        return digits.slice(0, 5) + '-' + digits.slice(5);
+      }
+      return digits;
+    }
+
     function clearFields() {
       autoFields.forEach(f => {
         f.value = '';
@@ -303,16 +313,18 @@ bairro.value = data.district</code></pre>
       mapaContainer.innerHTML = '';
     }
 
-    async function fetchCep(cep) {
-      const raw = cep.replace(/\D/g, '');
-      if (raw.length !== 8) return;
+    async function fetchCep(rawCep) {
+      if (rawCep.length !== 8 || !/^\d{8}$/.test(rawCep)) {
+        cepError.textContent = 'CEP inválido. São 8 números. Só isso.';
+        return;
+      }
 
       clearFields();
 
       try {
-        const res = await fetch(`https://cep.awesomeapi.com.br/json/${raw}`);
+        const res = await fetch(`https://cep.awesomeapi.com.br/json/${rawCep}`);
         if (!res.ok) {
-          if (res.status === 404) {
+          if (res.status === 404 || res.status === 400) {
             cepError.textContent = 'CEP não encontrado. Confere aí.';
           } else {
             cepError.textContent = 'Deu ruim na API. Tenta de novo.';
@@ -334,9 +346,18 @@ bairro.value = data.district</code></pre>
     }
 
     cepInput.addEventListener('input', () => {
-      const raw = cepInput.value.replace(/\D/g, '');
+      const masked = maskCep(cepInput.value);
+      cepInput.value = masked;
+      const raw = masked.replace(/\D/g, '');
+
+      clearTimeout(debounceTimer);
+
       if (raw.length === 8) {
         fetchCep(raw);
+      } else if (raw.length < 8) {
+        clearFields();
+      } else {
+        debounceTimer = setTimeout(() => fetchCep(raw), 300);
       }
     });
   </script>
