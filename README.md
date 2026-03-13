@@ -6,7 +6,7 @@ São 8 dígitos. 4 campos preenchidos automaticamente. Sem dropdown. Sem scroll.
 
 ## Demo
 
-[bossolani.github.io/cep-primeiro](https://bossolani.github.io/cep-primeiro/)
+[felipebossolani.github.io/cep-primeiro](https://felipebossolani.github.io/cep-primeiro/)
 
 ## Stack
 
