@@ -220,6 +220,22 @@
       border-top: 1px solid #2A2A2A;
     }
 
+    .share-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .share-sep {
+      color: #444;
+    }
+
+    .share-links a.copied {
+      color: #00FF41;
+    }
+
     @media (max-width: 600px) {
       body {
         font-size: 16px;
@@ -347,6 +363,13 @@ bairro.value = data.district</code></pre>
   </main>
 
   <footer>
+    <div class="share-links">
+      <a href="https://twitter.com/intent/tweet?text=Coloca%20o%20CEP%20primeiro.%20Formul%C3%A1rios%20brasileiros%20devem%20pedir%20o%20CEP%20antes%20de%20qualquer%20outro%20campo.&url=https%3A%2F%2Fbossolani.github.io%2Fcep-primeiro%2F" target="_blank" rel="noopener">Compartilhar no Twitter/X</a>
+      <span class="share-sep">·</span>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fbossolani.github.io%2Fcep-primeiro%2F" target="_blank" rel="noopener">Compartilhar no LinkedIn</a>
+      <span class="share-sep">·</span>
+      <a href="#" id="copy-link">Copiar link</a>
+    </div>
   </footer>
 
   <script>
@@ -435,6 +458,21 @@ bairro.value = data.district</code></pre>
       } else {
         debounceTimer = setTimeout(() => fetchCep(raw), 300);
       }
+    });
+
+    document.getElementById('copy-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = 'https://bossolani.github.io/cep-primeiro/';
+      navigator.clipboard.writeText(url).then(() => {
+        const link = e.target;
+        const original = link.textContent;
+        link.textContent = 'Link copiado!';
+        link.classList.add('copied');
+        setTimeout(() => {
+          link.textContent = original;
+          link.classList.remove('copied');
+        }, 2000);
+      });
     });
   </script>
 </body>
