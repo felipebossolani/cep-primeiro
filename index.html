@@ -282,5 +282,63 @@ bairro.value = data.district</code></pre>
   <footer>
   </footer>
 
+  <script>
+    const cepInput = document.getElementById('cep');
+    const logradouro = document.getElementById('logradouro');
+    const bairro = document.getElementById('bairro');
+    const cidade = document.getElementById('cidade');
+    const estado = document.getElementById('estado');
+    const cepError = document.getElementById('cep-error');
+    const demoResult = document.getElementById('demo-result');
+    const mapaContainer = document.getElementById('mapa-container');
+    const autoFields = [logradouro, bairro, cidade, estado];
+
+    function clearFields() {
+      autoFields.forEach(f => {
+        f.value = '';
+        f.classList.remove('filled');
+      });
+      cepError.textContent = '';
+      demoResult.style.display = 'none';
+      mapaContainer.innerHTML = '';
+    }
+
+    async function fetchCep(cep) {
+      const raw = cep.replace(/\D/g, '');
+      if (raw.length !== 8) return;
+
+      clearFields();
+
+      try {
+        const res = await fetch(`https://cep.awesomeapi.com.br/json/${raw}`);
+        if (!res.ok) {
+          if (res.status === 404) {
+            cepError.textContent = 'CEP não encontrado. Confere aí.';
+          } else {
+            cepError.textContent = 'Deu ruim na API. Tenta de novo.';
+          }
+          return;
+        }
+        const data = await res.json();
+        logradouro.value = data.address || '';
+        bairro.value = data.district || '';
+        cidade.value = data.city || '';
+        estado.value = data.state || '';
+        autoFields.forEach(f => {
+          if (f.value) f.classList.add('filled');
+        });
+        demoResult.style.display = 'block';
+      } catch {
+        cepError.textContent = 'Deu ruim na API. Tenta de novo.';
+      }
+    }
+
+    cepInput.addEventListener('input', () => {
+      const raw = cepInput.value.replace(/\D/g, '');
+      if (raw.length === 8) {
+        fetchCep(raw);
+      }
+    });
+  </script>
 </body>
 </html>
