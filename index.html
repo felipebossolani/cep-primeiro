@@ -135,9 +135,23 @@
 
   <main>
     <section id="hero">
+      <h1>Coloca o CEP primeiro.</h1>
+      <p>O CEP brasileiro tem <strong>8 dígitos</strong>. Desses 8 dígitos você extrai a cidade, o estado, o bairro e o logradouro. São 4 campos. Preenchidos automaticamente. Com um único input.</p>
+      <p>Mas você não faz isso, né? Não. Você me faz digitar a rua, o número, o bairro, depois escolher o estado num dropdown de 27 opções pra achar São Paulo espremido entre Santa Catarina e Sergipe, depois o CEP, e — o grand finale — confirmar que eu moro no Brasil. Como se eu tivesse digitado "Rua Augusta" por acidente, querendo dizer uma rua em Osaka.</p>
+      <p>Estamos em 2026. <strong>Que porra é essa.</strong></p>
     </section>
 
     <section id="oito-digitos">
+      <h2>São 8 dígitos.</h2>
+      <p>Eu digito <code>01001000</code>. Você agora sabe que eu estou na <strong>Praça da Sé, Sé, São Paulo — SP</strong>. Você não precisava me perguntar isso. Não precisava de dropdown. Não precisava que eu scrollasse até achar meu estado. Você tinha a resposta o tempo inteiro, em 8 números, e simplesmente… não usou.</p>
+      <p>E tem mais: a API retorna latitude e longitude. Dá pra mostrar o endereço no mapa. Retorna o DDD. Retorna o código IBGE da cidade. Tudo de graça.</p>
+      <p>A API é pública. É gratuita. São 4 linhas de código. Olha:</p>
+<pre><code>const res = await fetch(`https://cep.awesomeapi.com.br/json/${cep}`)
+const data = await res.json()
+cidade.value = data.city
+estado.value = data.state
+bairro.value = data.district</code></pre>
+      <p>Pronto. É isso. Você poderia ter implementado isso no tempo que levou pra ler esse site.</p>
     </section>
 
     <section id="demo">
