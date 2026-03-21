@@ -95,17 +95,3 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('section').forEach(s => observer.observe(s));
 
-document.getElementById('copy-link').addEventListener('click', (e) => {
-  e.preventDefault();
-  const url = 'https://bossolani.github.io/cep-primeiro/';
-  navigator.clipboard.writeText(url).then(() => {
-    const link = e.target;
-    const original = link.textContent;
-    link.textContent = 'Link copiado!';
-    link.classList.add('copied');
-    setTimeout(() => {
-      link.textContent = original;
-      link.classList.remove('copied');
-    }, 2000);
-  });
-});
