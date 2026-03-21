@@ -85,6 +85,8 @@ cepInput.addEventListener('input', () => {
   }
 });
 
+document.getElementById('cep-form').addEventListener('submit', (e) => e.preventDefault());
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {

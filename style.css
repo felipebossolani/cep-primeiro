@@ -132,6 +132,23 @@ pre code {
   color: #00FF41;
 }
 
+.closing-statement {
+  font-size: 1.4em;
+  margin-top: 2rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .shame {
   color: #C0392B;
 }
