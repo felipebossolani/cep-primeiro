@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  html-validate:
+    name: HTML Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx html-validate@latest index.html
+
+  lighthouse:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install -g @lhci/cli@latest chrome-launcher
+      - run: |
+          lhci autorun \
+            --collect.staticDistDir=. \
+            --collect.url=http://localhost/index.html \
+            --collect.numberOfRuns=1 \
+            --collect.settings.chromeFlags="--headless=new --no-sandbox --disable-gpu" \
+            --assert.assertions.categories:performance=off \
+            --assert.assertions.categories:accessibility=warn \
+            --assert.assertions.categories:best-practices=warn \
+            --assert.assertions.categories:seo=warn \
+            --upload.target=temporary-public-storage
